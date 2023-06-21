@@ -11,7 +11,7 @@ using MyCloud.Data;
 namespace MyCloud.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230621094922_InitialCreate")]
+    [Migration("20230621110350_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -32,11 +32,15 @@ namespace MyCloud.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Mail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("mail")
+                    b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

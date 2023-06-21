@@ -7,6 +7,7 @@ namespace MyCloud.Models
         [Key]
         public int Id { get; set; } 
         public string Name { get; set; }   
-        public string mail { get; set; }
+        public string Mail { get; set; }
+        public string Password { get; set; }  
     }
 }
