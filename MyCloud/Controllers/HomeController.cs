@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using MyCloud.Data;
 using MyCloud.Models;
 using System.Diagnostics;
 
@@ -8,19 +10,34 @@ namespace MyCloud.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        ApplicationDbContext db;
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
+            db = context;
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            return View(await db.Users.ToListAsync());
         }
 
         public IActionResult Privacy()
         {
             return View();
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(User user)
+        {
+            db.Users.Add(user);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

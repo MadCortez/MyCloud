@@ -1,0 +1,16 @@
+﻿@model MyCloud.Models.User
+
+<h2>Добавление пользователя</h2>
+<form asp-action="create" asp-controller="home">
+    <p>
+        <label asp-for="Name">Имя</label><br />
+        <input type="text" asp-for="Name" />
+    </p>
+    <p>
+        <label asp-for="mail">Почта</label><br />
+        <input type="email" asp-for="mail" />
+    </p>
+    <p>
+        <input type="submit" value="Отправить" />
+    </p>
+</form>

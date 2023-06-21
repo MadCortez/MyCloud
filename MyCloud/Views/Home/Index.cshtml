@@ -2,7 +2,17 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@model IEnumerable<MyCloud.Models.User>
+ 
+<h2>Список пользователей</h2>
+<p><a asp-action="Create">Добавить пользователя</a></p>
+<table class="table">
+     <tr><th>Имя</th><th>Почта</th></tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.mail</td>
+        </tr>
+    }
+</table>
