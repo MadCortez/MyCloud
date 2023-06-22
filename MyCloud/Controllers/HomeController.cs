@@ -27,19 +27,6 @@ namespace MyCloud.Controllers
             return View();
         }
 
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create(User user)
-        {
-            db.Users.Add(user);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
