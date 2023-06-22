@@ -24,9 +24,11 @@
                                     <input asp-for="Name" class="form-control textbox-dg font-weight-bold text-center" placeholder="Имя" type="text">
                                 </div>
                                 <div class="form-group">
+                                    <input asp-for="Mail" class="form-control textbox-dg font-weight-bold text-center" placeholder="Почта" type="email">
+                                </div>
+                                <div class="form-group">
                                     <input autocomplete="new-password" asp-for="Password" placeholder="Пароль" class="form-control textbox-dg font-weight-bold text-center" type="password">
                                 </div>
-                                <span class="text-black" style="font-size: small; font-family:'Comic Sans MS'">Пароль должен быть длиной больше 6 символов и иметь только латинские символы</span>
                                 <div class="form-group">
                                     <input autocomplete="new-password" asp-for="PasswordConfirm" placeholder="Подтвердите пароль" class="form-control textbox-dg font-weight-bold text-center" type="password">
                                 </div>

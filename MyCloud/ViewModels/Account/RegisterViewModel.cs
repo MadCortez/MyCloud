@@ -9,6 +9,8 @@ namespace MyCloud.ViewModels.Account
         [MinLength(3, ErrorMessage = "Имя должно иметь длину больше 3 символов")]
         public string Name { get; set; }
 
+        public string Mail { get; set; }
+
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "Укажите пароль")]
         [MinLength(6, ErrorMessage = "Пароль должен иметь длину больше 6 символов")]
