@@ -1,19 +1,12 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Mvc;
-using MyCloud.ViewModels.Account;
-using System.Security.Claims;
-using MyCloud.Interfaces;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace MyCloud.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly IAccount _accountService;
-
-        public AccountController(IAccount accountService)
+        public IActionResult Index()
         {
-            _accountService = accountService;
+            return View();
         }
 
         public IActionResult Login()
