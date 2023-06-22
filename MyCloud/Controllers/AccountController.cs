@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using MyCloud.ViewModels.Account;
 using System.Security.Claims;
 using MyCloud.Interfaces;
-using Microsoft.CSharp;
 
 namespace MyCloud.Controllers
 {
