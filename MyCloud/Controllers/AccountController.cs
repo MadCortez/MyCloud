@@ -36,5 +36,10 @@ namespace MyCloud.Controllers
             }
             return View(model);
         }
+
+        public IActionResult Register()
+        {
+            return View();
+        }
     }
 }
