@@ -5,14 +5,14 @@
 @model IEnumerable<MyCloud.Models.User>
  
 <h2>Список пользователей</h2>
-<p><a asp-action="Create">Добавить пользователя</a></p>
 <table class="table">
-     <tr><th>Имя</th><th>Почта</th></tr>
+     <tr><th>Имя</th><th>Почта</th><th>Пароль</th></tr>
     @foreach (var item in Model)
     {
         <tr>
             <td>@item.Name</td>
             <td>@item.Mail</td>
+            <td>@item.Password</td>
         </tr>
     }
 </table>
