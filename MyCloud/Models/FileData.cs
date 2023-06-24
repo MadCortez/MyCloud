@@ -8,7 +8,8 @@ namespace MyCloud.Models
         public int Id { get; set; }
         public string FileName { get; set; }
         public double Weight { get; set; }
-        public int AllMemory { get; set; } 
+        public long AllMemory { get; set; } 
         public DateTime CreateDate { get; set; }   
+        public string Path { get; set; }   
     }
 }

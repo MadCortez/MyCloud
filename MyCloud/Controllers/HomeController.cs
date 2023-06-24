@@ -3,23 +3,27 @@ using Microsoft.EntityFrameworkCore;
 using MyCloud.Data;
 using MyCloud.Models;
 using System.Diagnostics;
+using System.IO;
+using MyCloud.Helpers;
 
 namespace MyCloud.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        IWebHostEnvironment _appEnvironment;
 
         ApplicationDbContext db;
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, IWebHostEnvironment appEnvironment)
         {
             db = context;
             _logger = logger;
+            _appEnvironment = appEnvironment;
         }
 
         public async Task<IActionResult> Index()
         {
-            return View(await db.Users.ToListAsync());
+            return View(GetFilesHelper.GetUserFiles("wwwroot/Files"));
         }
 
         public IActionResult Privacy()
@@ -41,6 +45,22 @@ namespace MyCloud.Controllers
         public IActionResult Register()
         {
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UploadFile(IFormFile uploadedFile)
+        {
+            if (uploadedFile != null)
+            {
+                string path = "/Files/" + uploadedFile.FileName;
+                using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
+                {
+                    await uploadedFile.CopyToAsync(fileStream);
+                }
+                FileData file = new FileData { FileName = uploadedFile.FileName, Path = path };
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }

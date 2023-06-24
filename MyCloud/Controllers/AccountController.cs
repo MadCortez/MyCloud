@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using MyCloud.ViewModels.Account;
 using System.Security.Claims;
 using MyCloud.Interfaces;
+using System.Net;
 
 namespace MyCloud.Controllers
 {
@@ -25,7 +26,7 @@ namespace MyCloud.Controllers
             if (ModelState.IsValid)
             {
                 var response = await _accountService.Register(model);
-                if (response.StatusCode == Enum.StatusCode.OK)
+                if (response.StatusCode == HttpStatusCode.OK)
                 {
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                         new ClaimsPrincipal(response.Data));
@@ -46,7 +47,7 @@ namespace MyCloud.Controllers
             if (ModelState.IsValid)
             {
                 var response = await _accountService.Login(model);
-                if (response.StatusCode == Enum.StatusCode.OK)
+                if (response.StatusCode == HttpStatusCode.OK)
                 {
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                         new ClaimsPrincipal(response.Data));

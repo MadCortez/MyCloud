@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using MyCloud.Enum;
+using System.Net;
 
 namespace MyCloud.Response
 {
@@ -7,7 +7,7 @@ namespace MyCloud.Response
     {
         public string Description { get; set; }
 
-        public StatusCode StatusCode { get; set; }
+        public HttpStatusCode StatusCode { get; set; }
 
         public T Data { get; set; }
     }
@@ -15,7 +15,7 @@ namespace MyCloud.Response
     public interface IBaseResponse<T>
     {
         string Description { get; }
-        StatusCode StatusCode { get; }
+        HttpStatusCode StatusCode { get; }
         T Data { get; }
     }
 }

@@ -2,17 +2,23 @@
     ViewData["Title"] = "Home Page";
 }
 
-@model IEnumerable<MyCloud.Models.User>
- 
-<h2>Список пользователей</h2>
-<table class="table">
-     <tr><th>Имя</th><th>Почта</th><th>Пароль</th></tr>
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>@item.Name</td>
-            <td>@item.Mail</td>
-            <td>@item.Password</td>
-        </tr>
-    }
-</table>
+@model IEnumerable<MyCloud.Models.FileData>
+@if (User.Identity.IsAuthenticated)
+{
+    //<input type="file" class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="UploadFile" method="post" enctype="multipart/form-data">Загрузить</input>
+    <form asp-action="UploadFile" asp-controller="Home" method="post" enctype="multipart/form-data">
+        <input type="file" name="uploadedFile" /><br>
+        <input type="submit" value="Загрузить" />
+    </form>
+    <table class="table">
+        <tr><th>Имя файла</th><th>Размер файла</th><th>Дата загрузки</th></tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.FileName</td>
+                <td>@item.Weight</td>
+                <td>@item.CreateDate</td>
+            </tr>
+        }
+    </table>
+}

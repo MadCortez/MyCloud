@@ -15,4 +15,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Enum\" />
+    <Folder Include="wwwroot\Files\" />
+  </ItemGroup>
+
 </Project>

@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MyCloud.Enum;
 using MyCloud.Helpers;
 using MyCloud.Interfaces;
 using MyCloud.Models;
 using MyCloud.Response;
 using MyCloud.ViewModels.Account;
 using System.Data;
+using System.Net;
 using System.Security.Claims;
 
 namespace MyCloud.Implementations
@@ -50,7 +50,7 @@ namespace MyCloud.Implementations
                 {
                     Data = result,
                     Description = "Объект добавился",
-                    StatusCode = StatusCode.OK
+                    StatusCode = HttpStatusCode.OK
                 };
             }
             catch (Exception ex)
@@ -59,7 +59,7 @@ namespace MyCloud.Implementations
                 return new BaseResponse<ClaimsIdentity>()
                 {
                     Description = ex.Message,
-                    StatusCode = StatusCode.InternalServerError
+                    StatusCode = HttpStatusCode.InternalServerError
                 };
             }
         }
@@ -89,7 +89,7 @@ namespace MyCloud.Implementations
                 return new BaseResponse<ClaimsIdentity>()
                 {
                     Data = result,
-                    StatusCode = StatusCode.OK
+                    StatusCode = HttpStatusCode.OK
                 };
             }
             catch (Exception ex)
@@ -98,7 +98,7 @@ namespace MyCloud.Implementations
                 return new BaseResponse<ClaimsIdentity>()
                 {
                     Description = ex.Message,
-                    StatusCode = StatusCode.InternalServerError
+                    StatusCode = HttpStatusCode.InternalServerError
                 };
             }
         }
