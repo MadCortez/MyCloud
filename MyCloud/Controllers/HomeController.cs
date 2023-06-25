@@ -5,6 +5,7 @@ using MyCloud.Models;
 using System.Diagnostics;
 using System.IO;
 using MyCloud.Helpers;
+using Microsoft.AspNetCore.Hosting.Server;
 
 namespace MyCloud.Controllers
 {
@@ -61,6 +62,13 @@ namespace MyCloud.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DownloadFile(string fileName)
+        {
+            string filePath = $"/Files/{User.Identity.Name}/" + fileName;
+            return File(filePath, "application/octet-stream", fileName);
         }
     }
 }

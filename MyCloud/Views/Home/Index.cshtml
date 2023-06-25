@@ -5,7 +5,6 @@
 @model IEnumerable<MyCloud.Models.FileData>
 @if (User.Identity.IsAuthenticated)
 {
-    //<input type="file" class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="UploadFile" method="post" enctype="multipart/form-data">Загрузить</input>
     <form asp-action="UploadFile" asp-controller="Home" method="post" enctype="multipart/form-data">
         <input type="file" name="uploadedFile" /><br>
         <input type="submit" value="Загрузить" />
@@ -15,7 +14,9 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.FileName</td>
+                <td>
+                    <a asp-action="DownloadFile" asp-controller="Home" method="get" asp-route-filename="@item.FileName">@item.FileName</a>
+                </td>
                 <td>@item.Weight</td>
                 <td>@item.CreateDate</td>
             </tr>
