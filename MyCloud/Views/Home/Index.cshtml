@@ -10,15 +10,17 @@
         <input type="submit" value="Загрузить" />
     </form>
     <table class="table">
-        <tr><th>Имя файла</th><th>Размер файла</th><th>Дата загрузки</th></tr>
+        <tr><th>Имя файла</th><th>Размер файла</th><th>Дата загрузки</th><th>Действия</th></tr>
         @foreach (var item in Model)
         {
             <tr>
-                <td>
-                    <a asp-action="DownloadFile" asp-controller="Home" method="get" asp-route-filename="@item.FileName">@item.FileName</a>
-                </td>
+                <td>@item.FileName</td>
                 <td>@item.Weight</td>
                 <td>@item.CreateDate</td>
+                <td>
+                    <a asp-action="DownloadFile" asp-controller="Home" method="get" asp-route-filename="@item.FileName">Скачать</a>
+                    <a asp-action="DeleteFile" asp-controller="Home" method="get" asp-route-filename="@item.FileName">Удалить</a>
+                </td>
             </tr>
         }
     </table>

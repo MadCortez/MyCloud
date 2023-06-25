@@ -70,5 +70,13 @@ namespace MyCloud.Controllers
             string filePath = $"/Files/{User.Identity.Name}/" + fileName;
             return File(filePath, "application/octet-stream", fileName);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteFile(string fileName)
+        {
+            string filePath = $"wwwroot/Files/{User.Identity.Name}/" + fileName;
+            System.IO.File.Delete(filePath);
+            return RedirectToAction("Index");
+        }
     }
 }
