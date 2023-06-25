@@ -23,7 +23,7 @@ namespace MyCloud.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(GetFilesHelper.GetUserFiles("wwwroot/Files"));
+            return View(GetFilesHelper.GetUserFiles($"wwwroot/Files/{User.Identity.Name}"));
         }
 
         public IActionResult Privacy()
@@ -52,7 +52,7 @@ namespace MyCloud.Controllers
         {
             if (uploadedFile != null)
             {
-                string path = "/Files/" + uploadedFile.FileName;
+                string path = $"/Files/{User.Identity.Name}/" + uploadedFile.FileName;
                 using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
                 {
                     await uploadedFile.CopyToAsync(fileStream);

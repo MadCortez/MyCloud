@@ -46,6 +46,8 @@ namespace MyCloud.Implementations
 
                 var result = Authenticate(user);
 
+                Directory.CreateDirectory($"wwwroot/Files/{user.Name}");
+
                 return new BaseResponse<ClaimsIdentity>()
                 {
                     Data = result,
