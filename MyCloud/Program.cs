@@ -5,11 +5,13 @@ using MyCloud.Implementations;
 using MyCloud.Interfaces;
 using MyCloud.Models;
 using MyCloud.Repositories;
+using NLog.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Logging.ClearProviders();
 builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+builder.Host.UseNLog();
 
 
 
