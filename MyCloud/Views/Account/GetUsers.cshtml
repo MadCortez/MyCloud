@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@model IEnumerable<MyCloud.ViewModels.Account.UserViewModel>
+@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+{
+        <table class="table">
+            <tr><th>Имя</th><th>Почта</th><th>Права</th><th>Действия</th></tr>
+        @foreach (var item in Model)
+        {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Mail</td>
+                        <td>@item.Role</td>
+                        <td>
+                            <a asp-action="DeleteUser" asp-controller="Account" method="post" asp-route-id="@item.Id" asp-route-name="@item.Name">Удалить</a>
+                        </td>
+                    </tr>
+        }
+        </table>
+}

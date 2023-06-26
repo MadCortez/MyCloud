@@ -65,5 +65,27 @@ namespace MyCloud.Controllers
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "Home");
         }
+
+        public async Task<IActionResult> GetUsers()
+        {
+            var response = await _accountService.GetUsers();
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                return View(response.Data);
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        public async Task<IActionResult> DeleteUser(long id, string name)
+        {
+            var response = await _accountService.DeleteUser(id);
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                string dirPath = $"wwwroot/Files/{name}";
+                System.IO.Directory.Delete(dirPath, true);
+                return RedirectToAction("GetUsers");
+            }
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

@@ -10,5 +10,9 @@ namespace MyCloud.Interfaces
         Task<BaseResponse<ClaimsIdentity>> Register(RegisterViewModel model);
 
         Task<BaseResponse<ClaimsIdentity>> Login(LoginViewModel model);
+
+        Task<BaseResponse<IEnumerable<UserViewModel>>> GetUsers();
+
+        Task<IBaseResponse<bool>> DeleteUser(long id);
     }
 }

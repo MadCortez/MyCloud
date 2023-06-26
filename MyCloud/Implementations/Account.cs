@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using MyCloud.Helpers;
 using MyCloud.Interfaces;
 using MyCloud.Models;
@@ -114,9 +115,74 @@ namespace MyCloud.Implementations
             var claims = new List<Claim>
             {
                 new Claim(ClaimsIdentity.DefaultNameClaimType, user.Name),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role.ToString()),
             };
             return new ClaimsIdentity(claims, "ApplicationCookie",
                 ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
+        }
+
+        public async Task<BaseResponse<IEnumerable<UserViewModel>>> GetUsers()
+        {
+            try
+            {
+                var users = await _userRepository.GetAll()
+                    .Select(x => new UserViewModel()
+                    {
+                        Id = x.Id,
+                        Name = x.Name,
+                        Role = x.Role.ToString(),
+                        Mail = x.Mail,
+                    })
+                    .ToListAsync();
+
+                _logger.LogInformation($"[UserService.GetUsers] получено элементов {users.Count}");
+                return new BaseResponse<IEnumerable<UserViewModel>>()
+                {
+                    Data = users,
+                    StatusCode = HttpStatusCode.OK
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"[UserSerivce.GetUsers] error: {ex.Message}");
+                return new BaseResponse<IEnumerable<UserViewModel>>()
+                {
+                    StatusCode = HttpStatusCode.InternalServerError,
+                    Description = $"Внутренняя ошибка: {ex.Message}"
+                };
+            }
+        }
+        public async Task<IBaseResponse<bool>> DeleteUser(long id)
+        {
+            try
+            {
+                var user = await _userRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id);
+                if (user == null)
+                {
+                    return new BaseResponse<bool>
+                    {
+                        StatusCode = HttpStatusCode.NoContent,
+                        Data = false
+                    };
+                }
+                await _userRepository.Delete(user);
+                _logger.LogInformation($"[UserService.DeleteUser] пользователь удален");
+
+                return new BaseResponse<bool>
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Data = true
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"[UserSerivce.DeleteUser] error: {ex.Message}");
+                return new BaseResponse<bool>()
+                {
+                    StatusCode = HttpStatusCode.InternalServerError,
+                    Description = $"Внутренняя ошибка: {ex.Message}"
+                };
+            }
         }
     }
 }
