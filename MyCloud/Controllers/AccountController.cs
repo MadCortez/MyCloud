@@ -5,6 +5,7 @@ using MyCloud.ViewModels.Account;
 using System.Security.Claims;
 using MyCloud.Interfaces;
 using System.Net;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MyCloud.Controllers
 {
@@ -66,6 +67,7 @@ namespace MyCloud.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetUsers()
         {
             var response = await _accountService.GetUsers();
@@ -76,6 +78,7 @@ namespace MyCloud.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteUser(long id, string name)
         {
             var response = await _accountService.DeleteUser(id);
