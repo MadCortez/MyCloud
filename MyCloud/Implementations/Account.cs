@@ -38,6 +38,7 @@ namespace MyCloud.Implementations
                 {
                     Name = model.Name,
                     Mail = model.Mail,
+                    Role = Enum.Role.User,
                     Password = HashPasswordHelper.HashPassowrd(model.Password),
                 };
 
