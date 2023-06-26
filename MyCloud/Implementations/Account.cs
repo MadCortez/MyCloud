@@ -47,6 +47,7 @@ namespace MyCloud.Implementations
                 var result = Authenticate(user);
 
                 Directory.CreateDirectory($"wwwroot/Files/{user.Name}");
+                MailHelper.SendEmail(user.Mail, "Регистрация", "Ваш аккаунт был зарегистрирован");
 
                 return new BaseResponse<ClaimsIdentity>()
                 {
@@ -87,6 +88,8 @@ namespace MyCloud.Implementations
                     };
                 }
                 var result = Authenticate(user);
+
+                MailHelper.SendEmail(user.Mail, "Вход в аккаунт", "В ваш акканут был выполнен вход");
 
                 return new BaseResponse<ClaimsIdentity>()
                 {
