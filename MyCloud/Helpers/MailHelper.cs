@@ -20,7 +20,7 @@ namespace MyCloud.Helpers
             using (var client = new SmtpClient())
             {
                 await client.ConnectAsync("smtp.mail.ru", 465, true);
-                await client.AuthenticateAsync("ilya.pestik@mail.ru", "N7jqcpvFCMuRfiDXS0xe");
+                await client.AuthenticateAsync("", "");
                 await client.SendAsync(emailMessage);
 
                 await client.DisconnectAsync(true);
