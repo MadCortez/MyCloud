@@ -25,3 +25,7 @@
         }
     </table>
 }
+@if (!User.Identity.IsAuthenticated)
+{
+    <h1>Welcome Page</h1>
+}
