@@ -8,16 +8,19 @@ namespace MyCloud.Helpers
         {
             var directory = new DirectoryInfo(path);
             List<FileData> returnFiles = new List<FileData>();
-            var files = directory.GetFiles();
-            foreach(var file in files)
+            if (directory.Exists)
             {
-                FileData toAdd = new FileData();
-                toAdd.FileName = file.Name;
-                toAdd.Path = file.ToString();
-                toAdd.Weight = file.Length;
-                toAdd.CreateDate = file.LastAccessTime;
-                toAdd.AllMemory = file.Length;
-                returnFiles.Add(toAdd);
+                var files = directory.GetFiles();
+                foreach (var file in files)
+                {
+                    FileData toAdd = new FileData();
+                    toAdd.FileName = file.Name;
+                    toAdd.Path = file.ToString();
+                    toAdd.Weight = file.Length;
+                    toAdd.CreateDate = file.LastAccessTime;
+                    toAdd.AllMemory = file.Length;
+                    returnFiles.Add(toAdd);
+                }
             }
             return returnFiles;
         }
