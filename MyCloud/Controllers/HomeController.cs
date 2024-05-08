@@ -68,6 +68,7 @@ namespace MyCloud.Controllers
                 }
                 FileData file = new FileData { FileName = uploadedFile.FileName, Path = path };
                 ZipHelper.CreateZip(uploadedFile.FileName, User.Identity.Name);
+                EncryptionHelper.EncryptFile(uploadedFile.FileName, User.Identity.Name);
             }
 
             return RedirectToAction("Index");
@@ -76,7 +77,9 @@ namespace MyCloud.Controllers
         [HttpGet]
         public async Task<IActionResult> DownloadFile(string fileName)
         {
+            fileName = fileName.Replace("/", "").Replace("\\", "");
             string filePath = $"/Files/{User.Identity.Name}/" + fileName;
+            EncryptionHelper.DecryptFile(fileName, User.Identity.Name);
             ZipHelper.ExtractZip(fileName, User.Identity.Name);
             string rootPath = "D:\\MyCloud\\MyCloud\\wwwroot\\";
 

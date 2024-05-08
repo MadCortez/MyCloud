@@ -14,7 +14,7 @@ namespace MyCloud.Helpers
                 foreach (var file in files)
                 {
                     FileData toAdd = new FileData();
-                    toAdd.FileName = file.Name.Remove(file.Name.Length - 4, 4);
+                    toAdd.FileName = file.Name.Remove(file.Name.Length - 5, 5);
                     toAdd.Path = file.ToString();
                     toAdd.Weight = file.Length;
                     toAdd.CreateDate = file.LastAccessTime;

@@ -27,6 +27,7 @@ namespace MyCloud.Helpers
             ZipFile.ExtractToDirectory(filePath + ".zip", path);
             File.Move(rootPath + "\\toExtract\\" + fileName, filePath);
             Directory.Delete(path, true);
+            File.Delete(filePath + ".zip");
         }
     }
 }

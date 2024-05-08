@@ -9,7 +9,7 @@ namespace MyCloud.Helpers
         {
             using var emailMessage = new MimeMessage();
 
-            emailMessage.From.Add(new MailboxAddress("Администрация сайта", "ilya.pestik@mail.ru"));
+            emailMessage.From.Add(new MailboxAddress("Администрация сайта", ""));
             emailMessage.To.Add(new MailboxAddress("", email));
             emailMessage.Subject = subject;
             emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Plain)
