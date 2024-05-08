@@ -26,7 +26,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     .AddCookie(options =>
     {
         options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
-        options.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Home/");
+        options.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/");
+        options.LogoutPath = new Microsoft.AspNetCore.Http.PathString("/Account/Logout");
     });
 
 builder.Services.AddScoped<IAccount, Account>();
@@ -41,6 +42,18 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+app.Use(async (context, next) =>
+{
+    if (context.Request.Path == "/" && context.Request.Query.ContainsKey("ReturnUrl"))
+    {
+        context.Request.QueryString = QueryString.Empty;
+        context.Response.Redirect(context.Request.Path);
+        return;
+    }
+
+    await next();
+});
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

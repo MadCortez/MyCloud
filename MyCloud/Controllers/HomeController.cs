@@ -44,10 +44,6 @@ namespace MyCloud.Controllers
 
         public IActionResult Login()
         {
-            if (User.Identity?.IsAuthenticated == true)
-            {
-                return RedirectToAction("Index", "Home"); // Перенаправляем на домашнюю страницу
-            }
             return View();
         }
 
