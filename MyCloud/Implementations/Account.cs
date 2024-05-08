@@ -26,12 +26,12 @@ namespace MyCloud.Implementations
         {
             try
             {
-                var user = await _userRepository.GetAll().FirstOrDefaultAsync(x => x.Name == model.Name);
+                var user = await _userRepository.GetAll().FirstOrDefaultAsync(x => x.Name == model.Name || x.Mail == model.Mail);
                 if (user != null)
                 {
                     return new BaseResponse<ClaimsIdentity>()
                     {
-                        Description = "Пользователь с таким логином уже есть",
+                        Description = "Пользователь с таким логином или почтой уже есть",
                     };
                 }
 

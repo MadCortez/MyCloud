@@ -75,6 +75,7 @@ namespace MyCloud.Controllers
             {
                 return View(response.Data);
             }
+            await Logout();
             return RedirectToAction("Index", "Home");
         }
 

@@ -26,7 +26,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     .AddCookie(options =>
     {
         options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
-        options.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+        options.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Home/");
     });
 
 builder.Services.AddScoped<IAccount, Account>();

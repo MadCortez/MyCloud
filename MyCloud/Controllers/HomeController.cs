@@ -6,6 +6,10 @@ using System.Diagnostics;
 using System.IO;
 using MyCloud.Helpers;
 using Microsoft.AspNetCore.Hosting.Server;
+using Microsoft.AspNetCore.Authorization;
+using System.IO.Compression;
+using System.Threading.Tasks;
+using MyCloud.Implementations;
 
 namespace MyCloud.Controllers
 {
@@ -40,6 +44,10 @@ namespace MyCloud.Controllers
 
         public IActionResult Login()
         {
+            if (User.Identity?.IsAuthenticated == true)
+            {
+                return RedirectToAction("Index", "Home"); // Перенаправляем на домашнюю страницу
+            }
             return View();
         }
 
@@ -59,6 +67,7 @@ namespace MyCloud.Controllers
                     await uploadedFile.CopyToAsync(fileStream);
                 }
                 FileData file = new FileData { FileName = uploadedFile.FileName, Path = path };
+                ZipHelper.CreateZip(uploadedFile.FileName, User.Identity.Name);
             }
 
             return RedirectToAction("Index");
@@ -68,7 +77,25 @@ namespace MyCloud.Controllers
         public async Task<IActionResult> DownloadFile(string fileName)
         {
             string filePath = $"/Files/{User.Identity.Name}/" + fileName;
-            return File(filePath, "application/octet-stream", fileName);
+            ZipHelper.ExtractZip(fileName, User.Identity.Name);
+            string rootPath = "D:\\MyCloud\\MyCloud\\wwwroot\\";
+
+            var fileStream = new FileStream(rootPath + filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+
+            return new FileCleanupStreamResult(fileStream, "application/octet-stream", () =>
+            {
+                try
+                {
+                    System.IO.File.Delete(rootPath + filePath);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError($"Error deleting file: {ex.Message}");
+                }
+            })
+            {
+                FileDownloadName = fileName
+            };
         }
 
         [HttpGet]
