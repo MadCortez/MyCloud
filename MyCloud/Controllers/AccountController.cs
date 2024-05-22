@@ -12,6 +12,7 @@ namespace MyCloud.Controllers
     public class AccountController : Controller
     {
         private readonly IAccount _accountService;
+        private BackupHelper _backup = new BackupHelper();
 
         public AccountController(IAccount accountService)
         {
@@ -23,7 +24,7 @@ namespace MyCloud.Controllers
         {
             if (User.Identity?.IsAuthenticated == true)
             {
-                return RedirectToAction("Index", "Home"); // Перенаправляем на домашнюю страницу
+                return RedirectToAction("Index", "Home");
             }
             return View();
         }
@@ -51,7 +52,7 @@ namespace MyCloud.Controllers
         {
             if (User.Identity?.IsAuthenticated == true)
             {
-                return RedirectToAction("Index", "Home"); // Перенаправляем на домашнюю страницу
+                return RedirectToAction("Index", "Home");
             }
             return View();
         }
@@ -101,6 +102,7 @@ namespace MyCloud.Controllers
             {
                 string dirPath = $"wwwroot/Files/{name}";
                 System.IO.Directory.Delete(dirPath, true);
+                _backup.CreateBackup("wwwroot\\Files", "\\wwwroot\\Backups\\");
                 return RedirectToAction("GetUsers");
             }
             return RedirectToAction("Index", "Home");

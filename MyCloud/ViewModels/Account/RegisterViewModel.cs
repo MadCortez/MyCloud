@@ -13,7 +13,7 @@ namespace MyCloud.ViewModels.Account
 
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "Укажите пароль")]
-        [MinLength(6, ErrorMessage = "Пароль должен иметь длину больше 6 символов")]
+        [MinLength(6, ErrorMessage = "Пароль должен иметь длину не менее 6 символов")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting.Internal;
 using MyCloud.Helpers;
 using MyCloud.Interfaces;
 using MyCloud.Models;
@@ -15,6 +16,7 @@ namespace MyCloud.Implementations
     {
         private readonly ILogger<Account> _logger;
         private readonly IBaseRepository<User> _userRepository;
+        private BackupHelper _backup = new BackupHelper();
 
         public Account(IBaseRepository<User> userRepository, ILogger<Account> logger)
         {
@@ -50,6 +52,7 @@ namespace MyCloud.Implementations
 
                 Directory.CreateDirectory($"wwwroot/Files/{user.Name}");
                 MailHelper.SendEmail(user.Mail, "Регистрация", "Ваш аккаунт был зарегистрирован");
+                _backup.CreateBackup("wwwroot\\Files", "\\wwwroot\\Backups\\");
 
                 return new BaseResponse<ClaimsIdentity>()
                 {

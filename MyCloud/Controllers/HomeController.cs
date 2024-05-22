@@ -17,6 +17,7 @@ namespace MyCloud.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         IWebHostEnvironment _appEnvironment;
+        private BackupHelper _backup = new BackupHelper();
 
         ApplicationDbContext db;
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, IWebHostEnvironment appEnvironment)
@@ -65,6 +66,7 @@ namespace MyCloud.Controllers
                 FileData file = new FileData { FileName = uploadedFile.FileName, Path = path };
                 ZipHelper.CreateZip(uploadedFile.FileName, User.Identity.Name);
                 EncryptionHelper.EncryptFile(uploadedFile.FileName, User.Identity.Name);
+                _backup.CreateBackup("wwwroot\\Files", "\\wwwroot\\Backups\\");
             }
 
             return RedirectToAction("Index");
@@ -100,8 +102,9 @@ namespace MyCloud.Controllers
         [HttpGet]
         public async Task<IActionResult> DeleteFile(string fileName)
         {
-            string filePath = $"wwwroot/Files/{User.Identity.Name}/" + fileName;
+            string filePath = $"wwwroot/Files/{User.Identity.Name}/" + fileName + ".zip1";
             System.IO.File.Delete(filePath);
+            _backup.CreateBackup("wwwroot\\Files", "\\wwwroot\\Backups\\");
             return RedirectToAction("Index");
         }
     }

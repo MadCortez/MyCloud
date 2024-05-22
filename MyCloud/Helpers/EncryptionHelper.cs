@@ -18,7 +18,7 @@ namespace MyCloud.Helpers
             }
         }
 
-        public static byte[] GenerateKeyFromUsername(string username)
+        private static byte[] GenerateKeyFromUsername(string username)
         {
             byte[] hash = HashUsername(username);
             byte[] key = new byte[32];
@@ -26,7 +26,7 @@ namespace MyCloud.Helpers
             return key;
         }
 
-        public static byte[] GenerateIVFromUsername(string username)
+        private static byte[] GenerateIVFromUsername(string username)
         {
             byte[] hash = HashUsername(username);
             byte[] iv = new byte[16];
